@@ -7,4 +7,6 @@ const Result = () => {
 
 export default Result
 
-const Wrapper = tw.div``
+const Wrapper = tw.div`
+bg-gray-200 flex justify-center 
+`
