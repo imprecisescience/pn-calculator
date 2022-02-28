@@ -13,6 +13,7 @@ export default function Home() {
   return (
     <Wrapper>
       <MainContainer>
+        <Title>電話號碼改運</Title>
         <InputContainer>
           <NumberContainer>
             <MdPhone size={28} />
@@ -37,7 +38,10 @@ export default function Home() {
           <Link
             href={{
               pathname: '/result',
-              query: { phoneNumber: phoneNumber, birthDate: birthDate },
+              query: {
+                phoneNumber: phoneNumber,
+                birthDate: birthDate.toISOString().slice(0, 10),
+              },
             }}
           >
             <SubmitButton>計算</SubmitButton>
@@ -76,4 +80,7 @@ ml-2 bg-gray-100 p-1 h-10 rounded-2 w-full text-slate-600
 
 const SubmitButton = tw.button`
 w-full bg-black text-white text-xl mt-4 p-2
+`
+const Title = tw.div`
+text-3xl text-center mb-8
 `
