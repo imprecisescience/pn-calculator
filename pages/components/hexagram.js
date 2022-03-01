@@ -1,95 +1,84 @@
 import React from 'react'
 import tw from 'tailwind-styled-components'
-import { trigrams, hexagrams } from '../data/trigrams'
+import { hexagrams } from '../data/trigrams'
 import Yin from './yin'
 import Yang from './yang'
 
-const Hexagram = () => {
-  let phoneNumber = '98686841'
-  let upperTotal = 0
-  let lowerTotal = 0
-  let upperSeq = 0
-  let lowerSeq = 0
-  let changingLine = 0
-
-  phoneNumber.split('').map((c, index) => {
-    if (index < 4) {
-      upperTotal += parseInt(c)
-    } else {
-      lowerTotal += parseInt(c)
-    }
-  })
-  upperSeq = upperTotal % 8
-  lowerSeq = lowerTotal % 8
-  changingLine = 6 - ((upperTotal + lowerTotal) % 6)
-
-  console.log('upperTotal=' + upperTotal + ',' + upperSeq)
-  console.log('lowerTotal=' + lowerTotal + ',' + lowerSeq)
-  console.log('changingline = ' + changingLine)
-
+const Hexagram = ({ original, transformed, changingLine }) => {
   return (
     <Wrapper>
       <OriginalContainer>
         <HexagramContainer>
           <PalanceContainer>
-            {hexagrams[upperSeq][lowerSeq].Palace}
+            {hexagrams[original[0]][original[1]].Palace}
           </PalanceContainer>
           <LinesContainer>
-            {hexagrams[upperSeq][lowerSeq].Pattern.map((line, index) => {
-              return [
-                hexagrams[upperSeq][lowerSeq].Subject === index ? (
-                  <Role>世</Role>
-                ) : hexagrams[upperSeq][lowerSeq].Object === index ? (
-                  <Role>應</Role>
-                ) : (
-                  ''
-                ),
-                line === 0 ? (
-                  <Yin
-                    key={'O' + index}
-                    name={hexagrams[upperSeq][lowerSeq].Earth[index]}
-                    relation={hexagrams[upperSeq][lowerSeq].Relation[index]}
-                    change={index === changingLine}
-                  />
-                ) : (
-                  <Yang
-                    key={'O' + index}
-                    name={hexagrams[upperSeq][lowerSeq].Earth[index]}
-                    relation={hexagrams[upperSeq][lowerSeq].Relation[index]}
-                    change={index === changingLine}
-                  />
-                ),
-              ]
+            {hexagrams[original[0]][original[1]].Pattern.map((line, index) => {
+              return line === 0 ? (
+                <Yin
+                  key={'O' + index}
+                  name={hexagrams[original[0]][original[1]].Earth[index]}
+                  relation={hexagrams[original[0]][original[1]].Relation[index]}
+                  change={index === changingLine}
+                  subject={
+                    hexagrams[original[0]][original[1]].Subject === index
+                  }
+                  object={hexagrams[original[0]][original[1]].Object === index}
+                />
+              ) : (
+                <Yang
+                  key={'O' + index}
+                  name={hexagrams[original[0]][original[1]].Earth[index]}
+                  relation={hexagrams[original[0]][original[1]].Relation[index]}
+                  change={index === changingLine}
+                  subject={
+                    hexagrams[original[0]][original[1]].Subject === index
+                  }
+                  object={hexagrams[original[0]][original[1]].Object === index}
+                />
+              )
             })}
           </LinesContainer>
-          <NameContainer>{hexagrams[upperSeq][lowerSeq].Name}</NameContainer>
+          <NameContainer>
+            {hexagrams[original[0]][original[1]].Name}
+          </NameContainer>
         </HexagramContainer>
       </OriginalContainer>
       <TransformedContainer>
         <HexagramContainer>
           <PalanceContainer>
-            {hexagrams[upperSeq][lowerSeq].Palace}
+            {hexagrams[transformed[0]][transformed[1]].Palace}
           </PalanceContainer>
           <LinesContainer>
-            {hexagrams[upperSeq][lowerSeq].Pattern.map((line, index) => {
-              return line === 0 ? (
-                <Yin
-                  key={'T' + index}
-                  name={hexagrams[upperSeq][lowerSeq].Earth[index]}
-                  relation={hexagrams[upperSeq][lowerSeq].Relation[index]}
-                  change={index === changingLine}
-                />
-              ) : (
-                <Yang
-                  key={'T' + index}
-                  name={hexagrams[upperSeq][lowerSeq].Earth[index]}
-                  relation={hexagrams[upperSeq][lowerSeq].Relation[index]}
-                  change={index === changingLine}
-                />
-              )
-            })}
+            {hexagrams[transformed[0]][transformed[1]].Pattern.map(
+              (line, index) => {
+                return line === 0 ? (
+                  <Yin
+                    key={'T' + index}
+                    name={
+                      hexagrams[transformed[0]][transformed[1]].Earth[index]
+                    }
+                    relation={
+                      hexagrams[transformed[0]][transformed[1]].Relation[index]
+                    }
+                  />
+                ) : (
+                  <Yang
+                    key={'T' + index}
+                    name={
+                      hexagrams[transformed[0]][transformed[1]].Earth[index]
+                    }
+                    relation={
+                      hexagrams[transformed[0]][transformed[1]].Relation[index]
+                    }
+                  />
+                )
+              }
+            )}
           </LinesContainer>
-          <NameContainer>{hexagrams[upperSeq][lowerSeq].Name}</NameContainer>
+          <NameContainer>
+            {hexagrams[transformed[0]][transformed[1]].Name}
+          </NameContainer>
         </HexagramContainer>
       </TransformedContainer>
     </Wrapper>
@@ -116,8 +105,8 @@ const NameContainer = tw.div`
 w-1
 `
 const LinesContainer = tw.div`
-flex flex-col items-center
+flex flex-col items-center w-40
 `
 const Role = tw.div`
-w-1 text-s
+w-1 text-s 
 `
