@@ -1,14 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import tw from 'tailwind-styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { MdCake, MdPhone } from 'react-icons/md'
+import { MdCake, MdPhone, MdMoreVert } from 'react-icons/md'
 import Link from 'next/link'
 import 'react-datepicker/dist/react-datepicker.css'
 
 export default function Home() {
   const [birthDate, setBirthDate] = useState(new Date())
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [history, setHistory] = useState()
+
+  useEffect(() => {
+    const initialValue = JSON.parse(localStorage.getItem('pnQueryHistory'))
+    setHistory(initialValue || [])
+  }, [])
 
   return (
     <Wrapper>
@@ -47,7 +53,33 @@ export default function Home() {
             <SubmitButton>計算</SubmitButton>
           </Link>
         </InputContainer>
-        <HistoryContainer>History</HistoryContainer>
+        <HistoryContainer>
+          <HistoryTitle>查詢紀錄</HistoryTitle>
+          {history &&
+            history.map((h, index) => {
+              return (
+                <ItemContainer key={index}>
+                  <PhoneContainer> {h.phoneNumber}</PhoneContainer>
+                  <BirthContainer>{h.birthDate}</BirthContainer>
+                  <ActionButton>
+                    <Link
+                      href={{
+                        pathname: '/result',
+                        query: {
+                          phoneNumber: h.phoneNumber,
+                          birthDate: h.birthDate,
+                        },
+                      }}
+                    >
+                      <span>
+                        <MdMoreVert />
+                      </span>
+                    </Link>
+                  </ActionButton>
+                </ItemContainer>
+              )
+            })}
+        </HistoryContainer>
       </MainContainer>
     </Wrapper>
   )
@@ -58,13 +90,13 @@ bg-gray-200 flex justify-center
 `
 
 const MainContainer = tw.div`
-w-1/3 flex flex-col h-screen m-8 p-8 bg-white rounded-lg
+w-1/3 flex flex-col m-8 p-8 bg-white rounded-lg
 `
 
 const InputContainer = tw.div`
 `
 const HistoryContainer = tw.div`
-flex-1
+flex-1 mt-10
 `
 const NumberContainer = tw.div`
 flex items-center
@@ -82,5 +114,20 @@ const SubmitButton = tw.button`
 w-full bg-black text-white text-xl mt-4 p-2
 `
 const Title = tw.div`
-text-3xl text-center mb-8
+text-3xl text-center font-bold mb-8
+`
+const ItemContainer = tw.div`
+flex items-center odd:bg-white even:bg-gray-200 
+`
+const PhoneContainer = tw.div`
+flex-1 p-2 
+`
+const BirthContainer = tw.div`
+flex-1 p-2 
+`
+const ActionButton = tw.div`
+px-2 cursor-pointer
+`
+const HistoryTitle = tw.div`
+text-xl mb-4 font-semibold
 `

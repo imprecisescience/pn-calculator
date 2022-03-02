@@ -29,7 +29,10 @@ const Result = () => {
     })
     const upperSeq = upperTotal % 8
     const lowerSeq = lowerTotal % 8
-    const cLine = 6 - ((upperTotal + lowerTotal) % 6)
+    const cLine =
+      (upperTotal + lowerTotal) % 6 === 0
+        ? 0
+        : 6 - ((upperTotal + lowerTotal) % 6)
 
     setChangingLine(cLine)
     setOriginal([upperSeq, lowerSeq])
@@ -62,10 +65,24 @@ const Result = () => {
     setSCycle(sexagenaryCycle[sexagenaryCycleDay])
   }
 
+  const saveHistory = () => {
+    let initialValue = JSON.parse(localStorage.getItem('pnQueryHistory'))
+    if (initialValue) {
+      initialValue.unshift({ phoneNumber: phoneNumber, birthDate: birthDate })
+    } else {
+      initialValue = [{ phoneNumber: phoneNumber, birthDate: birthDate }]
+    }
+    localStorage.setItem(
+      'pnQueryHistory',
+      JSON.stringify(initialValue.slice(0, 10))
+    )
+  }
+
   useEffect(() => {
     if (router.isReady) {
       getHexagrams()
       getSexagenaryCycle()
+      saveHistory()
     }
   }, [phoneNumber, birthDate])
 
@@ -81,18 +98,22 @@ const Result = () => {
         </ButtonContainer>
 
         <Title>電話號碼起卦配八字</Title>
-        <BirthContainer>
-          <BirthDate>{birthDate}</BirthDate>
-          <EightWords scycle={scycle} />
-        </BirthContainer>
-        <HexagramContainer>
-          <PhoneNumber>{phoneNumber}</PhoneNumber>
-          <Hexagram
-            original={original}
-            transformed={transformed}
-            changingLine={changingLine}
-          />
-        </HexagramContainer>
+        {birthDate && phoneNumber && (
+          <>
+            <BirthContainer>
+              <BirthDate>{birthDate}</BirthDate>
+              <EightWords scycle={scycle} />
+            </BirthContainer>
+            <HexagramContainer>
+              <PhoneNumber>{phoneNumber}</PhoneNumber>
+              <Hexagram
+                original={original}
+                transformed={transformed}
+                changingLine={changingLine}
+              />
+            </HexagramContainer>
+          </>
+        )}
       </MainContainer>
     </Wrapper>
   )

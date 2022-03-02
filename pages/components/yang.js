@@ -12,7 +12,7 @@ const Yang = ({ name, change, relation, subject, object }) => {
         </StrokeContainer>
         <Relation>{relation}</Relation>
       </StaticContainer>
-      <OptionContainer>{change && <BsX size={28} />}</OptionContainer>
+      <OptionContainer>{change && <BsRecord size={22} />}</OptionContainer>
       <RoleContainer>{subject ? '世' : object ? '應' : ''}</RoleContainer>
     </Wrapper>
   )

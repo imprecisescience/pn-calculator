@@ -5,6 +5,13 @@ import Yin from './yin'
 import Yang from './yang'
 
 const Hexagram = ({ original, transformed, changingLine }) => {
+  console.log('original')
+  console.log(original)
+  console.log('transformed')
+  console.log(transformed)
+  console.log('changingLine')
+  console.log(changingLine)
+
   return (
     <Wrapper>
       <OriginalContainer>
@@ -47,7 +54,7 @@ const Hexagram = ({ original, transformed, changingLine }) => {
       <TransformedContainer>
         <HexagramContainer>
           <PalanceContainer>
-            {hexagrams[transformed[0]][transformed[1]].Palace}
+            {hexagrams[original[0]][original[1]].Palace}
           </PalanceContainer>
           <LinesContainer>
             {hexagrams[transformed[0]][transformed[1]].Pattern.map(
@@ -106,7 +113,4 @@ w-1
 `
 const LinesContainer = tw.div`
 flex flex-col items-center w-40
-`
-const Role = tw.div`
-w-1 text-s 
 `
