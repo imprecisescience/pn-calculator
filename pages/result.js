@@ -6,6 +6,7 @@ import Hexagram from "../components/hexagram";
 import EightWords from "../components/eightwords";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { trigrams, sexagenaryCycle } from "../data/trigrams";
+import Footer from "../components/footer";
 
 const Result = () => {
   const router = useRouter();
@@ -115,6 +116,7 @@ const Result = () => {
           </>
         )}
       </MainContainer>
+      <Footer />
     </Wrapper>
   );
 };
@@ -122,7 +124,7 @@ const Result = () => {
 export default Result;
 
 const Wrapper = tw.div`
-bg-gray-200 flex justify-center 
+bg-gray-200 flex flex-col items-center
 `;
 const MainContainer = tw.div`
 flex flex-col m-8 p-8 bg-white rounded-lg relative

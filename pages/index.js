@@ -1,20 +1,21 @@
-import { useState, useEffect } from 'react'
-import tw from 'tailwind-styled-components'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import { MdCake, MdPhone, MdMoreVert } from 'react-icons/md'
-import Link from 'next/link'
-import 'react-datepicker/dist/react-datepicker.css'
+import { useState, useEffect } from "react";
+import tw from "tailwind-styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { MdCake, MdPhone, MdMoreVert } from "react-icons/md";
+import Link from "next/link";
+import "react-datepicker/dist/react-datepicker.css";
+import Footer from "../components/footer";
 
 export default function Home() {
-  const [birthDate, setBirthDate] = useState(new Date())
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [history, setHistory] = useState()
+  const [birthDate, setBirthDate] = useState(new Date());
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [history, setHistory] = useState();
 
   useEffect(() => {
-    const initialValue = JSON.parse(localStorage.getItem('pnQueryHistory'))
-    setHistory(initialValue || [])
-  }, [])
+    const initialValue = JSON.parse(localStorage.getItem("pnQueryHistory"));
+    setHistory(initialValue || []);
+  }, []);
 
   return (
     <Wrapper>
@@ -24,7 +25,7 @@ export default function Home() {
           <NumberContainer>
             <MdPhone size={28} />
             <Input
-              placeholder='8-digit number'
+              placeholder="8-digit number"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             ></Input>
@@ -37,13 +38,13 @@ export default function Home() {
               peekNextMonth
               showMonthDropdown
               showYearDropdown
-              dropdownMode='select'
-              wrapperClassName='date-picker'
+              dropdownMode="select"
+              wrapperClassName="date-picker"
             />
           </DateContainer>
           <Link
             href={{
-              pathname: '/result',
+              pathname: "/result",
               query: {
                 phoneNumber: phoneNumber,
                 birthDate: birthDate.toISOString().slice(0, 10),
@@ -64,7 +65,7 @@ export default function Home() {
                   <ActionButton>
                     <Link
                       href={{
-                        pathname: '/result',
+                        pathname: "/result",
                         query: {
                           phoneNumber: h.phoneNumber,
                           birthDate: h.birthDate,
@@ -77,57 +78,53 @@ export default function Home() {
                     </Link>
                   </ActionButton>
                 </ItemContainer>
-              )
+              );
             })}
         </HistoryContainer>
       </MainContainer>
+      <Footer />
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = tw.div`
-bg-gray-200 flex justify-center 
-`
-
+bg-gray-200 flex flex-col items-center 
+`;
 const MainContainer = tw.div`
 w-1/3 flex flex-col m-8 p-8 bg-white rounded-lg
-`
-
+`;
 const InputContainer = tw.div`
-`
+`;
 const HistoryContainer = tw.div`
 flex-1 mt-10
-`
+`;
 const NumberContainer = tw.div`
 flex items-center
-`
-
+`;
 const DateContainer = tw.div`
 flex items-center mt-4
-`
-
+`;
 const Input = tw.input`
 ml-2 bg-gray-100 p-1 h-10 rounded-2 w-full text-slate-600
-`
-
+`;
 const SubmitButton = tw.button`
 w-full bg-black text-white text-xl mt-4 p-2
-`
+`;
 const Title = tw.div`
 text-3xl text-center font-bold mb-8
-`
+`;
 const ItemContainer = tw.div`
 flex items-center odd:bg-white even:bg-gray-200 
-`
+`;
 const PhoneContainer = tw.div`
 flex-1 p-2 
-`
+`;
 const BirthContainer = tw.div`
 flex-1 p-2 
-`
+`;
 const ActionButton = tw.div`
 px-2 cursor-pointer
-`
+`;
 const HistoryTitle = tw.div`
 text-xl mb-4 font-semibold
-`
+`;
