@@ -91,7 +91,7 @@ const Wrapper = tw.div`
 bg-gray-200 flex flex-col items-center 
 `;
 const MainContainer = tw.div`
-w-1/3 flex flex-col m-8 p-8 bg-white rounded-lg
+sm:w-full md:w-1/2 lg:w-1/3 flex flex-col m-8 p-8 bg-white rounded-lg
 `;
 const InputContainer = tw.div`
 `;

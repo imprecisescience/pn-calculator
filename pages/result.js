@@ -127,7 +127,7 @@ const Wrapper = tw.div`
 bg-gray-200 flex flex-col items-center
 `;
 const MainContainer = tw.div`
-flex flex-col m-8 p-8 bg-white rounded-lg relative
+flex flex-col sm:m-2 md:m-8 sm:p-2 lg:p-8 bg-white rounded-lg relative
 `;
 const Title = tw.div`
 text-3xl text-center mb-8
