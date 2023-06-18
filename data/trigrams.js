@@ -1162,7 +1162,7 @@ const hexagrams = [
     },
     {
       Name: "山雷頤",
-      Pattern: [1, 0, 0, 1, 1, 1],
+      Pattern: [1, 0, 0, 0, 0, 1],
       Earth: ["寅", "子", "戌", "辰", "寅", "子"],
       Palace: "巽",
       Subject: 2,
